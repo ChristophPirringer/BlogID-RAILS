@@ -1,2 +1,36 @@
 <br>
 :)
+
+<div class="container">
+  <div class="block" id="consumed">
+
+    <% if current_user %>
+      <% if current_user.foods.any? %>
+      <h4>You ate a friggin <%= current_user.foods.sum(:calories) %> calories!!!</h4>
+      <ul>
+
+        <% current_user.foods.each do |food| %>
+        <li><%= food.name %> for <%= food.calories %></li>
+        <% end %>
+      </ul>
+      <% else %>
+        <p>You really should eat someting</p>
+      <% end %>
+      <%= link_to 'Enter Food', new_user_food_path(current_user) %>
+    <% else %>
+      <p>
+        Please log in to use the Awesome that is this app.
+      </p>
+    <%end %>
+  </div>
+
+
+</div>
+
+
+<% if @foods.any? %>
+  <% @foods.each do |food| %>
+    <%= food.name %>
+    <%= food.calories %>
+  <% end %>
+<% end %>
