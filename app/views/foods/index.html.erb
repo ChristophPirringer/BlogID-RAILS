@@ -7,16 +7,16 @@
     <% if current_user %>
       <% if current_user.foods.any? %>
       <h4>You ate a friggin <%= current_user.foods.sum(:calories) %> calories!!!</h4>
-      <ul>
+      <ul id="food_list">
 
         <% current_user.foods.each do |food| %>
-        <li><%= food.name %> for <%= food.calories %></li>
+          <%= render food %>
         <% end %>
       </ul>
       <% else %>
         <p>You really should eat someting</p>
       <% end %>
-      <%= link_to 'Enter Food', new_user_food_path(current_user) %>
+      <%= link_to 'Enter Food', new_user_food_path(current_user), id: "new_food_link", remote: true %>
     <% else %>
       <p>
         Please log in to use the Awesome that is this app.

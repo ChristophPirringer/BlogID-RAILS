@@ -12,7 +12,10 @@ class FoodsController < ApplicationController
     @user = User.find(params[:user_id])
     @food = @user.foods.new(food_params)
     if @food.save
-      redirect_to root_path
+      respond_to do |format|
+        format.html { redirect_to foods_path }
+        format.js
+      end
     else
       render :new
     end
