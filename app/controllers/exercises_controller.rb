@@ -1,6 +1,7 @@
 class ExercisesController < ApplicationController
   def index
     @exercises = Food.all
+    
   end
 
   def new
@@ -12,7 +13,10 @@ class ExercisesController < ApplicationController
     @user = User.find(params[:user_id])
     @exercise = @user.exercises.new(exercise_params)
     if @exercise.save
-      redirect_to root_path
+      respond_to do |format|
+        format.html { redirect_to foods_path }
+        format.js
+      end
     else
       render :new
     end

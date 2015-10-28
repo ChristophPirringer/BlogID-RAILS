@@ -12,6 +12,7 @@ gem 'bcrypt'
 gem 'devise'
 gem 'paperclip'
 gem 'hirb'
+# gem 'will_paginate', '3.0.pre2'
 
 
 group :development, :test do

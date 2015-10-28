@@ -1,15 +1,23 @@
 <br>
 :)
 
+<%= form_tag user_foods_path(current_user), :method => 'get' do %>
+  <p>
+    <%= text_field_tag :search, params[:search] %>
+    <%= submit_tag "Search", :name => nil %>
+  </p>
+<% end %>
+
+
 <div class="container">
   <div class="block" id="consumed">
 
     <% if current_user %>
-      <% if current_user.foods.any? %>
-      <h4>You ate a friggin <%= current_user.foods.sum(:calories) %> calories!!!</h4>
+      <% if @foods.any? %>
+      <h4>You ate a friggin <span id="consumed_total"><%= @foods.sum(:calories) %></span> calories!!!</h4>
       <ul id="food_list">
 
-        <% current_user.foods.each do |food| %>
+        <% @foods.each do |food| %>
           <%= render food %>
         <% end %>
       </ul>
@@ -27,18 +35,18 @@
   <div class="block" id="burned">
 
     <% if current_user %>
-      <% if current_user.exercises.any? %>
-      <h4>You burned a friggin <%= current_user.exercises.sum(:calories) %> calories!!!</h4>
-      <ul>
+      <% if @exercises.any? %>
+      <h4>You burned a friggin <span id="burned_total"><%= @exercises.sum(:calories) %></span> calories!!!</h4>
+      <ul id="exercise_list">
 
-        <% current_user.exercises.each do |exercise| %>
-        <li><%= exercise.name %> for <%= exercise.calories %></li>
+        <% @exercises.each do |exercise| %>
+          <%= render exercise %>
         <% end %>
       </ul>
       <% else %>
         <p>You really should do someting</p>
       <% end %>
-      <%= link_to 'Enter Exercise', new_user_exercise_path(current_user) %>
+      <%= link_to 'Enter Exercise', new_user_exercise_path(current_user), id: "new_exercise_link", remote: true%>
     <% else %>
       <p>
         Please log in to use the Awesome that is this app.
@@ -47,8 +55,9 @@
   </div>
 
   <div class="block" id="total">
-    <h4>Well that is a total of <%= current_user.foods.sum(:calories) - current_user.exercises.sum(:calories) %> straight
-      <% if ( (current_user.foods.sum(:calories) - current_user.exercises.sum(:calories)) > 0) %>
+    <h4>Well that is a total of <span id="calorie_total"><%= @foods.sum(:calories) - @exercises.sum(:calories) %>
+</span> straight
+      <% if ( (@foods.sum(:calories) - @exercises.sum(:calories)) > 0) %>
         to your hips.
       <% else %>
         from your hips.

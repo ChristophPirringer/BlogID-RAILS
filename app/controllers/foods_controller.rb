@@ -1,6 +1,12 @@
 class FoodsController < ApplicationController
   def index
-    @foods = Food.all
+    if params[:search] && params[:search] != ""
+      @foods = current_user.foods.all.search(params[:search])
+      @exercises = current_user.exercises.all.search(params[:search])
+    else
+      @foods = current_user.foods.all
+      @exercises = current_user.exercises.all
+    end
   end
 
   def new
