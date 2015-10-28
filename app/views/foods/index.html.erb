@@ -24,13 +24,35 @@
     <%end %>
   </div>
 
+  <div class="block" id="burned">
 
+    <% if current_user %>
+      <% if current_user.exercises.any? %>
+      <h4>You burned a friggin <%= current_user.exercises.sum(:calories) %> calories!!!</h4>
+      <ul>
+
+        <% current_user.exercises.each do |exercise| %>
+        <li><%= exercise.name %> for <%= exercise.calories %></li>
+        <% end %>
+      </ul>
+      <% else %>
+        <p>You really should do someting</p>
+      <% end %>
+      <%= link_to 'Enter Exercise', new_user_exercise_path(current_user) %>
+    <% else %>
+      <p>
+        Please log in to use the Awesome that is this app.
+      </p>
+    <%end %>
+  </div>
+
+  <div class="block" id="total">
+    <h4>Well that is a total of <%= current_user.foods.sum(:calories) - current_user.exercises.sum(:calories) %> straight
+      <% if ( (current_user.foods.sum(:calories) - current_user.exercises.sum(:calories)) > 0) %>
+        to your hips.
+      <% else %>
+        from your hips.
+      <% end %>
+    </h4>
+  </div>
 </div>
-
-
-<% if @foods.any? %>
-  <% @foods.each do |food| %>
-    <%= food.name %>
-    <%= food.calories %>
-  <% end %>
-<% end %>
