@@ -1,4 +1,5 @@
 $("#exercise_list").append('<%= j render @exercise %>');
+$("#searched_exercise_list").append('<%= j render @exercise %>');
 $("#new_exercise").remove();
 $('#new_exercise_link').show();
 $('#burned_total').text(<%= current_user.exercises.sum(:calories) %>)

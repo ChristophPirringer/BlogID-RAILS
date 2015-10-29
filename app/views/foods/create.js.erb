@@ -1,4 +1,5 @@
 $("#food_list").append('<%= j render @food %>');
+$("#searched_food_list").append('<%= j render @food %>');
 $("#new_food").remove();
 $('#new_food_link').show();
 $('#consumed_total').text(<%= current_user.foods.sum(:calories) %>)

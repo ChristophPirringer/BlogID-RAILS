@@ -1,6 +1,5 @@
 <br>
 :)
-
 <%= form_tag user_foods_path(current_user), :method => 'get' do %>
   <p>
     <%= text_field_tag :search, params[:search] %>
@@ -10,58 +9,71 @@
 
 
 <div class="container">
-  <div class="block" id="consumed">
+  <div class="col-md-6 col-md-offset-3">
+    <div class="block" id="consumed">
 
-    <% if current_user %>
       <% if @foods.any? %>
-      <h4>You ate a friggin <span id="consumed_total"><%= @foods.sum(:calories) %></span> calories!!!</h4>
-      <ul id="food_list">
-
-        <% @foods.each do |food| %>
-          <%= render food %>
-        <% end %>
-      </ul>
+        <div class="total-food">
+          <h4>All Consumed Food:</h4>
+          <h5>You ate a friggin <span id="consumed_total"><%= @foods.sum(:calories) %></span> calories!!!</h5>
+          <ul id="food_list">
+            <% @foods.each do |food| %>
+              <%= render food %>
+            <% end %>
+          <%= will_paginate @foods, :param_name => "foods_page"%>
+          </ul>
+        </div>
+        <div class="searched-food">
+          <h4>Searched Food:</h4>
+          <ul id="searched_food_list">
+            <% @searchedFoods.each do |food| %>
+              <%= render food %>
+            <% end %>
+            <%= will_paginate @searchedFoods, :param_name => "searched_foods_page" %>
+          </ul>
+        </div>
       <% else %>
         <p>You really should eat someting</p>
       <% end %>
       <%= link_to 'Enter Food', new_user_food_path(current_user), id: "new_food_link", remote: true %>
-    <% else %>
-      <p>
-        Please log in to use the Awesome that is this app.
-      </p>
-    <%end %>
-  </div>
+    </div>
 
-  <div class="block" id="burned">
+    <div class="block" id="burned">
 
-    <% if current_user %>
       <% if @exercises.any? %>
-      <h4>You burned a friggin <span id="burned_total"><%= @exercises.sum(:calories) %></span> calories!!!</h4>
-      <ul id="exercise_list">
-
-        <% @exercises.each do |exercise| %>
-          <%= render exercise %>
-        <% end %>
-      </ul>
+      <div class="total-exercise">
+        <h4>All Done Exercise:</h4>
+        <h5>You burned a friggin <span id="burned_total"><%= @exercises.sum(:calories) %></span> calories!!!</h5>
+        <ul id="exercise_list">
+          <% @exercises.each do |exercise| %>
+            <%= render exercise %>
+          <% end %>
+          <%= will_paginate @exercises, :param_name => "exercises_page" %>
+        </ul>
+      </div>
+      <div class="searched-exercise">
+        <h4>Searched Exercise:</h4>
+        <ul id="searched_exercise_list">
+          <% @searchedExercises.each do |exercise| %>
+            <%= render exercise %>
+          <% end %>
+          <%= will_paginate @searchedExercises, :param_name => "searched_exercises_page" %>
+        </ul>
+      </div>
       <% else %>
         <p>You really should do someting</p>
       <% end %>
       <%= link_to 'Enter Exercise', new_user_exercise_path(current_user), id: "new_exercise_link", remote: true%>
-    <% else %>
-      <p>
-        Please log in to use the Awesome that is this app.
-      </p>
-    <%end %>
-  </div>
+    </div>
 
-  <div class="block" id="total">
-    <h4>Well that is a total of <span id="calorie_total"><%= @foods.sum(:calories) - @exercises.sum(:calories) %>
-</span> straight
+    <div class="block" id="total">
+      <h4>Well that is a total of <span id="calorie_total"><%= @foods.sum(:calories) - @exercises.sum(:calories) %></span> straight
       <% if ( (@foods.sum(:calories) - @exercises.sum(:calories)) > 0) %>
         to your hips.
       <% else %>
         from your hips.
       <% end %>
-    </h4>
+      </h4>
+    </div>
   </div>
 </div>

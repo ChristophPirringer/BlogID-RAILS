@@ -15,3 +15,16 @@
  */
 @import "bootstrap-sprockets";
 @import "bootstrap";
+
+.col-md-6.col-md-offset-3 {
+  background-color: #77D2A4;
+  padding: 30px;
+  padding-top: 15px;
+}
+
+.searched-food, .total-food, .searched-exercise, .total-exercise {
+  border: 3px solid #2E8A5C;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin: 1rem;
+}
