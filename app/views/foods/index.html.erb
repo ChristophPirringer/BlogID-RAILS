@@ -29,6 +29,8 @@
           <h4>All Consumed Food:</h4>
           <h5>You ate a friggin <span id="consumed_total"><%= @foods.sum(:calories) %></span> calories!!!</h5>
           <ul id="food_list">
+            <%= link_to "Name", :foods => "name" %>   <%= link_to "Calories", :foods => "calories" %>
+
             <% @foods.each do |food| %>
               <%= render food %>
             <% end %>
@@ -38,6 +40,8 @@
         <div class="searched-food">
           <h4>Searched Food:</h4>
           <ul id="searched_food_list">
+            <%= link_to "Name", :searched_foods => "name" %>   <%= link_to "Calories", :searched_foods => "calories" %>
+
             <% @searchedFoods.each do |food| %>
               <%= render food %>
             <% end %>
@@ -57,6 +61,8 @@
         <h4>All Done Exercise:</h4>
         <h5>You burned a friggin <span id="burned_total"><%= @exercises.sum(:calories) %></span> calories!!!</h5>
         <ul id="exercise_list">
+          <%= link_to "Name", :exercises => "name" %>   <%= link_to "Calories", :exercises => "calories" %>
+
           <% @exercises.each do |exercise| %>
             <%= render exercise %>
           <% end %>
@@ -66,6 +72,8 @@
       <div class="searched-exercise">
         <h4>Searched Exercise:</h4>
         <ul id="searched_exercise_list">
+          <%= link_to "Name", :searched_exercises => "name" %>   <%= link_to "Calories", :searched_exercises => "calories" %>
+
           <% @searchedExercises.each do |exercise| %>
             <%= render exercise %>
           <% end %>
