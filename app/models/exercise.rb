@@ -6,13 +6,18 @@ class Exercise < ActiveRecord::Base
   belongs_to :user
 
   def self.search(search)
-  if search == 'all'
+    search_Int = search.to_i
+    if search == 'all'
       all
-  elsif search.present?
-    where('name ILIKE ?', "%#{search}%")
-  else
-    where(true)
+    elsif search.present? && (search_Int != 0)
+      # where('name ILIKE ?' || 'calories = ?', "%#{search}%" || "%#{search_Int}")
+      where('calories = ?', "#{search_Int}")
+    elsif search.present? && (search_Int = 0)
+      # where('name ILIKE ?' || 'calories = ?', "%#{search}%" || "%#{search_Int}")
+      where('name ILIKE ?', "#{search}")
+    else
+      where(true)
+    end
   end
-end
 
 end

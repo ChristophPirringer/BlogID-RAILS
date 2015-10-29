@@ -1,14 +1,26 @@
-<br>
-:)
-<%= form_tag user_foods_path(current_user), :method => 'get' do %>
-  <p>
-    <%= text_field_tag :search, params[:search] %>
-    <%= submit_tag "Search", :name => nil %>
-  </p>
-<% end %>
-
 
 <div class="container">
+    <div class="search head col-md-6">
+      <%= form_tag user_foods_path(current_user), :method => 'get' do %>
+        <p>
+          <%= text_field_tag :search, params[:search] %>
+          <%= submit_tag "Search", :name => nil %>
+        </p>
+      <% end %>
+    </div>
+
+    <div class="login head col-md-6">
+      <%= link_to "HOME", root_path %>
+      <% if user_signed_in? %>
+      Logged in as <strong><%= current_user.email %></strong>.
+      <%= link_to 'Edit profile', edit_user_registration_path %> |
+      <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+      <% else %>
+      <%= link_to "Sign up", new_user_registration_path %> |
+      <%= link_to "Login", new_user_session_path %>
+      <% end %>
+    </div>
+
   <div class="col-md-6 col-md-offset-3">
     <div class="block" id="consumed">
 
@@ -20,8 +32,8 @@
             <% @foods.each do |food| %>
               <%= render food %>
             <% end %>
-          <%= will_paginate @foods, :param_name => "foods_page"%>
           </ul>
+          <%= will_paginate @foods, :param_name => "foods_page"%>
         </div>
         <div class="searched-food">
           <h4>Searched Food:</h4>
@@ -29,8 +41,8 @@
             <% @searchedFoods.each do |food| %>
               <%= render food %>
             <% end %>
-            <%= will_paginate @searchedFoods, :param_name => "searched_foods_page" %>
           </ul>
+          <%= will_paginate @searchedFoods, :param_name => "searched_foods_page" %>
         </div>
       <% else %>
         <p>You really should eat someting</p>
@@ -48,8 +60,8 @@
           <% @exercises.each do |exercise| %>
             <%= render exercise %>
           <% end %>
-          <%= will_paginate @exercises, :param_name => "exercises_page" %>
         </ul>
+        <%= will_paginate @exercises, :param_name => "exercises_page" %>
       </div>
       <div class="searched-exercise">
         <h4>Searched Exercise:</h4>
@@ -57,8 +69,8 @@
           <% @searchedExercises.each do |exercise| %>
             <%= render exercise %>
           <% end %>
-          <%= will_paginate @searchedExercises, :param_name => "searched_exercises_page" %>
         </ul>
+        <%= will_paginate @searchedExercises, :param_name => "searched_exercises_page" %>
       </div>
       <% else %>
         <p>You really should do someting</p>
